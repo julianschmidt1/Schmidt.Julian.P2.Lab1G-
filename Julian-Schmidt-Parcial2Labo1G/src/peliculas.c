@@ -130,18 +130,28 @@ int pel_ordenarPorGenero(void *pPrimerPelicula, void *pSegundoPelicula) {
 	char generoPrimerPelicula[15];
 	char generoSegundoPelicula[15];
 	int resultadoOrdenamiento;
+	int ratingPrimerPelicula;
+	int ratingSegundaPelicula;
+	int resultadoOrdenamientoRating;
 
 	if (pPrimerPelicula != NULL && pSegundoPelicula != NULL) {
 		auxPrimerPelicula = (eMovie*) pPrimerPelicula;
 		auxSegundoPelicula = (eMovie*) pSegundoPelicula;
 		if (pel_getGenero(auxPrimerPelicula, generoPrimerPelicula)
-				&& pel_getGenero(auxSegundoPelicula, generoSegundoPelicula)) {
+				&& pel_getGenero(auxSegundoPelicula, generoSegundoPelicula)
+				&& pel_getRating(auxPrimerPelicula, &ratingPrimerPelicula)
+				&& pel_getRating(auxSegundoPelicula, &ratingSegundaPelicula)) {
 			resultadoOrdenamiento = stricmp(generoPrimerPelicula,
 					generoSegundoPelicula);
+			resultadoOrdenamientoRating = ratingPrimerPelicula
+					< ratingSegundaPelicula;
+
 			if (resultadoOrdenamiento > 0) {
 				rtn = 1;
 			} else {
-				if (resultadoOrdenamiento < 0) {
+				if (resultadoOrdenamiento < 0
+						|| (resultadoOrdenamiento == 0
+								&& resultadoOrdenamientoRating)) {
 					rtn = -1;
 				}
 			}

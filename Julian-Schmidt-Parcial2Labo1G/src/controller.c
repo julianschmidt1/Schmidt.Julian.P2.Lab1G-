@@ -297,7 +297,7 @@ int controller_ordenarPeliculas(LinkedList *this) {
 
 	if (this != NULL) {
 		pFunc = pel_ordenarPorGenero;
-		ll_sort(this, pFunc, 1);
+		ll_sort(this, pFunc, 0);
 		rtn = 1;
 	}
 	return rtn;
