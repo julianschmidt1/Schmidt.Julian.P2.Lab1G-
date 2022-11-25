@@ -31,4 +31,6 @@ int controller_callbackFilterTerror(void *this);
 int controller_callbackFilterAccion(void *this);
 int controller_callbackFilterComedia(void *this);
 
+int controller_ordenarPeliculas(LinkedList *this);
+
 #endif /* CONTROLLER_H_ */

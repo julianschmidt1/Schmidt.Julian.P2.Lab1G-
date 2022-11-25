@@ -123,3 +123,30 @@ int pel_getRating(eMovie *this, int *rating) {
 	return rtn;
 }
 
+int pel_ordenarPorGenero(void *pPrimerPelicula, void *pSegundoPelicula) {
+	int rtn = 0;
+	eMovie *auxPrimerPelicula;
+	eMovie *auxSegundoPelicula;
+	char generoPrimerPelicula[15];
+	char generoSegundoPelicula[15];
+	int resultadoOrdenamiento;
+
+	if (pPrimerPelicula != NULL && pSegundoPelicula != NULL) {
+		auxPrimerPelicula = (eMovie*) pPrimerPelicula;
+		auxSegundoPelicula = (eMovie*) pSegundoPelicula;
+		if (pel_getGenero(auxPrimerPelicula, generoPrimerPelicula)
+				&& pel_getGenero(auxSegundoPelicula, generoSegundoPelicula)) {
+			resultadoOrdenamiento = stricmp(generoPrimerPelicula,
+					generoSegundoPelicula);
+			if (resultadoOrdenamiento > 0) {
+				rtn = 1;
+			} else {
+				if (resultadoOrdenamiento < 0) {
+					rtn = -1;
+				}
+			}
+		}
+	}
+	return rtn;
+}
+

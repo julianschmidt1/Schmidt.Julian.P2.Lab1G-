@@ -89,6 +89,7 @@ int controller_asignarRating(LinkedList *this) {
 	if (this != NULL) {
 		pFunc = controller_callbackMap;
 		this = ll_map(this, pFunc);
+		rtn = 1;
 	}
 
 	controller_listarPeliculas(this);
@@ -143,6 +144,7 @@ int controller_asignarGenero(LinkedList *this) {
 	if (this != NULL) {
 		pFunc = controller_callbackMapGeneros;
 		this = ll_map(this, pFunc);
+		rtn = 1;
 	}
 
 	return rtn;
@@ -282,15 +284,22 @@ int controller_listaFiltradaPorGenero(LinkedList *this, int generoSeleccionado,
 		listaFiltrada = ll_filter(this, pFunc);
 	}
 
-	if (ll_isEmpty(listaFiltrada)) {
-		printf("vacia");
-	}
-
-	controller_listarPeliculas(listaFiltrada);
-
 	if (controller_guardarPeliculasModoTexto(path, listaFiltrada)) {
 		rtn = 1;
 	}
 
 	return rtn;
 }
+
+int controller_ordenarPeliculas(LinkedList *this) {
+	int rtn = 0;
+	int (*pFunc)(void*, void*);
+
+	if (this != NULL) {
+		pFunc = pel_ordenarPorGenero;
+		ll_sort(this, pFunc, 1);
+		rtn = 1;
+	}
+	return rtn;
+}
+

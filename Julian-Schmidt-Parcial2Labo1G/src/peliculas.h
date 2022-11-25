@@ -33,5 +33,6 @@ int pel_setTitulo(eMovie *this, char *titulo);
 int pel_setId(eMovie *this, int id);
 int pel_setRating(eMovie *this, int rating);
 int pel_setGenero(eMovie *this, char *genero);
+int pel_ordenarPorGenero(void *pPrimerPelicula, void *pSegundoPelicula);
 
 #endif /* eMovieS_H_ */

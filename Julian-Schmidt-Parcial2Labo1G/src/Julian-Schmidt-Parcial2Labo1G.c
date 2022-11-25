@@ -55,29 +55,52 @@ int main(void) {
 			break;
 		case 3:
 			if (!ll_isEmpty(listaPeliculas)) {
-				controller_asignarRating(listaPeliculas);
+				if (controller_asignarRating(listaPeliculas)) {
+					puts("\nRating asignado con exito");
+				}
 			} else {
 				puts("\n la lista esta vacia");
 			}
 			break;
 		case 4:
 			if (!ll_isEmpty(listaPeliculas)) {
-				controller_asignarGenero(listaPeliculas);
+				if (controller_asignarGenero(listaPeliculas)) {
+					puts("\nGeneros asignados correctamente");
+				}
+
 			} else {
 				puts("\n la lista esta vacia");
 			}
 			break;
 		case 5:
-			if (utn_getNumero(&generoSeleccionado,
-					"\nIngrese la opcion de genero: (1. Drama | 2. Comedia | 3. Accion | 4. Terror",
-					"\nOpcion invalida", 1, 4, 1)) {
-				controller_listaFiltradaPorGenero(listaPeliculas,
-						generoSeleccionado, "peliculasFiltradas.csv");
+			if (!ll_isEmpty(listaPeliculas)) {
+				if (utn_getNumero(&generoSeleccionado,
+						"\nIngrese la opcion de genero: (1. Drama | 2. Comedia | 3. Accion | 4. Terror",
+						"\nOpcion invalida", 1, 4, 1)) {
+
+					if (controller_listaFiltradaPorGenero(listaPeliculas,
+							generoSeleccionado, "peliculasFiltradas.csv")) {
+						puts("\nLista creada y filtrada con exito");
+					}
+
+				}
 			}
 			break;
 		case 6:
+			if (!ll_isEmpty(listaPeliculas)) {
+				if (controller_ordenarPeliculas(listaPeliculas)) {
+					puts("\nPeliculas ordenadas con exito");
+				}
+
+			}
 			break;
 		case 7:
+			if (!ll_isEmpty(listaPeliculas)) {
+				if (controller_guardarPeliculasModoTexto(
+						"peliculasOrdenadas.csv", listaPeliculas)) {
+					puts("\nPeliculas Guardadas con exito");
+				}
+			}
 			break;
 		case 8:
 			break;
