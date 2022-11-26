@@ -10,14 +10,8 @@
 #include <stdlib.h>
 #include "parser.h"
 #include "peliculas.h"
+#include "callbacks.h"
 
-/** \brief Carga los datos de los jugadores desde el archivo jugadores.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int retorna 1 en caso de exito, 0 en caso de error y -1 en caso de que la lista tenga datos
- *
- */
 int controller_cargarDesdeTexto(char *path, LinkedList *pArrayList) {
 	int rtn = 0;
 
@@ -87,7 +81,7 @@ int controller_asignarRating(LinkedList *this) {
 	void (*pFunc)(void *element);
 
 	if (this != NULL) {
-		pFunc = controller_callbackMap;
+		pFunc = callbackMap;
 		this = ll_map(this, pFunc);
 		rtn = 1;
 	}
@@ -97,52 +91,12 @@ int controller_asignarRating(LinkedList *this) {
 	return rtn;
 }
 
-void controller_callbackMap(void *this) {
-	eMovie *pelicula;
-	int min = 1;
-	int max = 10;
-	int numeroRandom;
-	if (this != NULL) {
-		pelicula = (eMovie*) this;
-		// Profe estoy tratando esto como un int porque hay un error al intentar usar % con flotantes, me puse a investigar dice que use uan funcion fmod, pero no quiero perder tiempo y no la conozco
-		numeroRandom = rand() % (max - min + 1) + min;
-		pel_setRating(pelicula, numeroRandom);
-	}
-}
-
-void controller_callbackMapGeneros(void *this) {
-	eMovie *pelicula;
-	int min = 1;
-	int max = 4;
-	int numeroRandom;
-	char auxGenero[30];
-	if (this != NULL) {
-		pelicula = (eMovie*) this;
-		numeroRandom = rand() % (max - min + 1) + min;
-		switch (numeroRandom) {
-		case 1:
-			strcpy(auxGenero, "Drama");
-			break;
-		case 2:
-			strcpy(auxGenero, "Comedia");
-			break;
-		case 3:
-			strcpy(auxGenero, "Accion");
-			break;
-		case 4:
-			strcpy(auxGenero, "Terror");
-			break;
-		}
-		pel_setGenero(pelicula, auxGenero);
-	}
-}
-
 int controller_asignarGenero(LinkedList *this) {
 	int rtn = 0;
 	void (*pFunc)(void *element);
 
 	if (this != NULL) {
-		pFunc = controller_callbackMapGeneros;
+		pFunc = callbackMapGeneros;
 		this = ll_map(this, pFunc);
 		rtn = 1;
 	}
@@ -150,77 +104,6 @@ int controller_asignarGenero(LinkedList *this) {
 	return rtn;
 }
 
-int controller_callbackFilterDrama(void *this) {
-	int rtn = 0;
-	eMovie *auxPelicula;
-	char auxGenero[30];
-
-	if (this != NULL) {
-		auxPelicula = (eMovie*) this;
-		pel_getGenero(auxPelicula, auxGenero);
-		if (!stricmp("drama", auxGenero)) {
-			rtn = 1;
-		}
-	}
-
-	return rtn;
-}
-
-int controller_callbackFilterTerror(void *this) {
-	int rtn = 0;
-	eMovie *auxPelicula;
-	char auxGenero[30];
-
-	if (this != NULL) {
-		auxPelicula = (eMovie*) this;
-		pel_getGenero(auxPelicula, auxGenero);
-		if (!stricmp("terror", auxGenero)) {
-			rtn = 1;
-		}
-	}
-
-	return rtn;
-}
-
-int controller_callbackFilterAccion(void *this) {
-	int rtn = 0;
-	eMovie *auxPelicula;
-	char auxGenero[30];
-
-	if (this != NULL) {
-		auxPelicula = (eMovie*) this;
-		pel_getGenero(auxPelicula, auxGenero);
-		if (!stricmp("accion", auxGenero)) {
-			rtn = 1;
-		}
-	}
-
-	return rtn;
-}
-
-int controller_callbackFilterComedia(void *this) {
-	int rtn = 0;
-	eMovie *auxPelicula;
-	char auxGenero[30];
-
-	if (this != NULL) {
-		auxPelicula = (eMovie*) this;
-		pel_getGenero(auxPelicula, auxGenero);
-		if (!stricmp("comedia", auxGenero)) {
-			rtn = 1;
-		}
-	}
-
-	return rtn;
-}
-
-/** \brief Guarda los datos de los peliculas en el archivo jugadores.csv (modo texto).
- *
- * \param path char* ruta del archivo
- * \param pArrayListSeleccion LinkedList* array de selecciones
- * \return int retorna 1 en caso de exito y 0 en caso de error
- *
- */
 int controller_guardarPeliculasModoTexto(char *path, LinkedList *pArrayList) {
 	int rtn = 0;
 	FILE *pFile;
@@ -268,16 +151,16 @@ int controller_listaFiltradaPorGenero(LinkedList *this, int generoSeleccionado,
 	if (this != NULL) {
 		switch (generoSeleccionado) {
 		case 1:
-			pFunc = controller_callbackFilterDrama;
+			pFunc = callbackFilterDrama;
 			break;
 		case 2:
-			pFunc = controller_callbackFilterComedia;
+			pFunc = callbackFilterComedia;
 			break;
 		case 3:
-			pFunc = controller_callbackFilterAccion;
+			pFunc = callbackFilterAccion;
 			break;
 		case 4:
-			pFunc = controller_callbackFilterTerror;
+			pFunc = callbackFilterTerror;
 			break;
 		}
 
@@ -296,7 +179,7 @@ int controller_ordenarPeliculas(LinkedList *this) {
 	int (*pFunc)(void*, void*);
 
 	if (this != NULL) {
-		pFunc = pel_ordenarPorGenero;
+		pFunc = callbackOrdenarPorGenero;
 		ll_sort(this, pFunc, 0);
 		rtn = 1;
 	}

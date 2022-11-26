@@ -100,6 +100,8 @@ int main(void) {
 						"peliculasOrdenadas.csv", listaPeliculas)) {
 					puts("\nPeliculas Guardadas con exito");
 				}
+			} else {
+				puts("\nLista vacia");
 			}
 			break;
 		case 8:
