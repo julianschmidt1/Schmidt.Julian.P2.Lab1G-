@@ -68,6 +68,7 @@ int controller_listarPeliculas(LinkedList *this) {
 					printf("| %-5d  | %-30s | %-30s | %-8d |\n", auxPelicula.id,
 							auxPelicula.titulo, auxPelicula.genero,
 							auxPelicula.rating);
+					rtn = 1;
 				}
 			}
 		}

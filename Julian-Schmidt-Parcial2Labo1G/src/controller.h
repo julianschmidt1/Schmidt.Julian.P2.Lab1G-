@@ -20,12 +20,30 @@
  */
 int controller_cargarDesdeTexto(char *path, LinkedList *pArrayList);
 
+/// \brief Listado de peliculas
+///
+/// \param this Lista a mostrar
+/// \return Retorna 1 en caso de exito y 0 en caso de error
 int controller_listarPeliculas(LinkedList *this);
 
+/// \brief Funcion que llama a map para asignar un rating aleatorio a la estructura pelicula
+///
+/// \param this Puntero a pelicula
+/// \return Retorna 1 en caso de exito y 0 en caso de error
 int controller_asignarRating(LinkedList *this);
 
+/// \brief Funcion que llama a map para asignar un genero aleatorio a la estructura pelicula
+///
+/// \param this Puntero a pelicula
+/// \return retorna 1 en caso de exito y 0 en caso de error
 int controller_asignarGenero(LinkedList *this);
 
+/// \brief Crea un nuevo listado en base al criterio de filtrado seleccionado
+///
+/// \param this Lista de peliculas
+/// \param generoSeleccionado valor entero que determina genero
+/// \param path ruta al archivo
+/// \return retorna 1 en caso de poder crear el archivo filtrado y 0 en caso de error
 int controller_listaFiltradaPorGenero(LinkedList *this, int generoSeleccionado,
 		char *path);
 
@@ -38,6 +56,10 @@ int controller_listaFiltradaPorGenero(LinkedList *this, int generoSeleccionado,
  */
 int controller_guardarPeliculasModoTexto(char *path, LinkedList *pArrayList);
 
+/// \brief Funcion que ordena peliculas por el criterio descendente
+///
+/// \param this lista de peliculas
+/// \return retorna 1 en caso de exito y 0 en caso de error
 int controller_ordenarPeliculas(LinkedList *this);
 
 #endif /* CONTROLLER_H_ */
