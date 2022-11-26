@@ -22,6 +22,7 @@ int main(void) {
 	LinkedList *listaPeliculas = ll_newLinkedList();
 	int menuPrincipal;
 	char nombreArchivo[30];
+	char nombreArchivoGuardar[30];
 	int generoSeleccionado;
 
 	do {
@@ -78,11 +79,16 @@ int main(void) {
 						"\nIngrese la opcion de genero: (1. Drama | 2. Comedia | 3. Accion | 4. Terror",
 						"\nOpcion invalida", 1, 4, 1)) {
 
-					if (controller_listaFiltradaPorGenero(listaPeliculas,
-							generoSeleccionado, "peliculasFiltradas.csv")) {
-						puts("\nLista creada y filtrada con exito");
+					if (utn_getString(
+							"\nIngrese el nombre del archivo a guardar: ",
+							"\nNombre invalido.", 1, 30, nombreArchivoGuardar)
+							== 0) {
+						strcat(nombreArchivoGuardar, ".csv");
+						if (controller_listaFiltradaPorGenero(listaPeliculas,
+								generoSeleccionado, nombreArchivoGuardar)) {
+							puts("\nLista creada y filtrada con exito");
+						}
 					}
-
 				}
 			}
 			break;
@@ -96,9 +102,14 @@ int main(void) {
 			break;
 		case 7:
 			if (!ll_isEmpty(listaPeliculas)) {
-				if (controller_guardarPeliculasModoTexto(
-						"peliculasOrdenadas.csv", listaPeliculas)) {
-					puts("\nPeliculas Guardadas con exito");
+				if (utn_getString("\nIngrese el nombre del archivo a guardar: ",
+						"\nNombre invalido.", 1, 30, nombreArchivoGuardar)
+						== 0) {
+					strcat(nombreArchivoGuardar, ".csv");
+					if (controller_guardarPeliculasModoTexto(
+							nombreArchivoGuardar, listaPeliculas)) {
+						puts("\nPeliculas Guardadas con exito");
+					}
 				}
 			} else {
 				puts("\nLista vacia");
